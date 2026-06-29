@@ -356,7 +356,7 @@
                 // লোগো (ভিতরের দিকে)
                 if (loadedIconImages[i]) {
                     const iconSize = 22;
-                    const iconX = radius * 0.62;
+                    const iconX = radius * 0.45;
                     const iconY = 0;
                     ctx.imageSmoothingEnabled = true;
                     ctx.imageSmoothingQuality = 'high';
@@ -370,7 +370,7 @@
                 ctx.textBaseline = "middle";
                 ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
                 ctx.shadowBlur = 4;
-                ctx.fillText(prizes[i].amount, radius * 0.86, 0);
+                ctx.fillText(prizes[i].amount, radius * 0.70, 0);
 
                 ctx.restore();
             }
