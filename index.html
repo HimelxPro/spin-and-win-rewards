@@ -12,7 +12,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=600;700;800;900&display=swap');
         
-        /* 🔥 মোবাইলের কাঁপা বন্ধ - পরিবর্তিত */
         html, body {
             height: 100%;
             margin: 0;
@@ -35,26 +34,22 @@
             left: 0;
         }
 
-        /* Intense Neon Green Glow */
         .ultra-neon-glow {
             color: #00ff66;
             text-shadow: 0 0 20px rgba(0, 255, 102, 0.7), 
                          0 0 40px rgba(0, 255, 102, 0.3);
         }
 
-        /* Glassmorphic Ticker Layout Blur */
         .shadow-ticker {
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             background: rgba(3, 6, 12, 0.85);
         }
 
-        /* Premium Adaptive Responsive Radial Spotlights */
         .main-cyber-bg {
             background-image: 
                 radial-gradient(circle at 50% 25%, rgba(0, 255, 102, 0.12) 0%, rgba(6, 9, 19, 1) 65%);
         }
 
-        /* Giant Mechanical Spinner Structural Outlines */
         .spinner-outer-rim {
             box-shadow: 0 0 0 6px #1e293b,
                         0 0 0 10px rgba(0, 255, 102, 0.12),
@@ -63,7 +58,6 @@
             will-change: transform;
         }
 
-        /* Infinite Horizontal Data Scroller Engine */
         @keyframes marquee {
             0% { transform: translateX(0%); }
             100% { transform: translateX(-50%); }
@@ -74,7 +68,6 @@
             animation: marquee 45s linear infinite;
         }
 
-        /* Smooth Canvas rendering to stop white screen flash */
         canvas {
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
@@ -82,7 +75,6 @@
             image-rendering: crisp-edges;
         }
 
-        /* স্ক্রলযোগ্য কন্টেন্টের জন্য */
         .scroll-content {
             flex: 1;
             overflow-y: auto;
@@ -96,7 +88,7 @@
 </head>
 <body class="text-slate-100 antialiased main-cyber-bg selection:bg-emerald-500 selection:text-slate-900">
 
-    <!-- টিকার (শীর্ষে ফিক্সড) -->
+    <!-- টিকার -->
     <div class="w-full shadow-ticker border-b border-slate-900/60 py-2.5 overflow-hidden backdrop-blur-md z-50 shrink-0">
         <div id="liveTickerStream" class="animate-marquee gap-16 text-[10px] sm:text-[11px] font-extrabold tracking-widest text-slate-400 uppercase">
             <span><i class="fa-solid fa-tower-broadcast text-emerald-400 mr-1.5 animate-pulse"></i> Core Distribution Node: <span class="text-emerald-400 font-black">Online Verified</span></span>
@@ -327,7 +319,7 @@
             }
         };
 
-        // --- ক্যানভাস সেটআপ (HD) ---
+        // --- ক্যানভাস সেটআপ ---
         function setupHighDefinitionCanvas() {
             const dpr = window.devicePixelRatio || 1;
             const rect = canvas.getBoundingClientRect();
@@ -343,7 +335,7 @@
             buildVibrantWheelGraphics();
         });
 
-        // 🔥 স্পিনার গ্রাফিক্স (টেক্সট + লোগো দূরে সরানো)
+        // 🔥 স্পিনার গ্রাফিক্স (টেক্সট + লোগো আলাদা জায়গায়)
         function buildVibrantWheelGraphics() {
             const rect = canvas.getBoundingClientRect();
             const width = rect.width;
@@ -373,26 +365,25 @@
                 ctx.translate(centerX, centerY);
                 ctx.rotate(angle + arc / 2);
                 
-                // টেক্সট সেন্টার থেকে দূরে
+                // 🔥 টেক্সট - মাঝখানে (radius * 0.55)
                 ctx.fillStyle = "#ffffff";
-                ctx.font = "900 14px 'Plus Jakarta Sans'"; 
-                ctx.textAlign = "right";
+                ctx.font = "900 13px 'Plus Jakarta Sans'";
+                ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
                 ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
                 ctx.shadowBlur = 4;
-                
-                ctx.fillText(prizes[i].amount, radius - 45, 0);
+                ctx.fillText(prizes[i].amount, radius * 0.55, 0);
 
-                // লোগো সেন্টার থেকে দূরে
+                // 🔥 লোগো - টেক্সটের চেয়ে একটু দূরে (radius * 0.78)
                 if (loadedIconImages[i]) {
-                    const iconSize = 20; 
-                    const iconX = radius - 120; 
-                    const iconY = -10; 
+                    const iconSize = 18; 
+                    const iconX = radius * 0.78;
+                    const iconY = 0; 
                     
                     ctx.imageSmoothingEnabled = true;
                     ctx.imageSmoothingQuality = 'high';
                     
-                    ctx.drawImage(loadedIconImages[i], iconX, iconY, iconSize, iconSize);
+                    ctx.drawImage(loadedIconImages[i], iconX - iconSize/2, iconY - iconSize/2, iconSize, iconSize);
                 }
 
                 ctx.restore();
