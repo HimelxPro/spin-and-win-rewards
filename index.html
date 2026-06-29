@@ -127,7 +127,6 @@
                 </p>
             </div>
 
-            <!-- Absolute Square Container to Avoid Mobile Sizing Flickers -->
             <div class="relative w-full max-w-[270px] sm:max-w-[340px] md:max-w-[380px] aspect-square flex items-center justify-center mb-5 shrink-0">
                 
                 <div class="absolute -top-4 sm:-top-6 left-1/2 -translate-x-1/2 z-40 drop-shadow-[0_8px_15px_rgba(0,0,0,0.9)]">
@@ -144,7 +143,7 @@
                 </div>
 
                 <div class="w-full h-full rounded-full p-1.5 spinner-outer-rim relative overflow-hidden flex items-center justify-center bg-slate-950 aspect-square">
-                    <canvas id="wheelCanvas" width="600" height="600" class="w-full h-full rounded-full transform transition-transform duration-[7000ms] cubic-bezier(0.15, 0.85, 0.1, 1)"></canvas>
+                    <canvas id="wheelCanvas" class="w-full h-full rounded-full transform transition-transform duration-[7000ms] cubic-bezier(0.15, 0.85, 0.1, 1)"></canvas>
                     
                     <div class="absolute w-12 sm:w-14 h-12 sm:h-14 bg-slate-900 rounded-full border-4 border-slate-700 flex items-center justify-center z-20 shadow-2xl">
                         <div class="w-6 sm:w-7 h-6 sm:h-7 bg-slate-950 rounded-full flex items-center justify-center border border-slate-800">
@@ -261,17 +260,6 @@
 
         const loadedIconImages = [];
         let totalLoadedImagesCounter = 0;
-        prizes.forEach((prize, idx) => {
-            const img = new Image();
-            img.src = prize.iconUrl;
-            img.onload = () => {
-                totalLoadedImagesCounter++;
-                if (totalLoadedImagesCounter === numSections) {
-                    buildVibrantWheelGraphics(); 
-                }
-            };
-            loadedIconImages[idx] = img;
-        });
 
         const AudioKit = {
             audioCtx: null,
@@ -313,11 +301,37 @@
             }
         };
 
+        // --- ক্যানভাস হাই-রেজোলিউশন (HD) ফিক্স ইঞ্জিন ---
+        function setupHighDefinitionCanvas() {
+            const dpr = window.devicePixelRatio || 1;
+            
+            // সিএসএস সাইজ ফিক্সড রেখে ইন্টারনাল রেজোলিউশন ডাবল/ত্রিপল করা হচ্ছে
+            const rect = canvas.getBoundingClientRect();
+            
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            
+            // স্কেল অ্যাডজাস্টমেন্ট যেন ড্রইং কোড আগের মতোই থাকে
+            ctx.scale(dpr, dpr);
+        }
+
+        // উইন্ডো লোড এবং রিসাইজ হলে রেজোলিউশন ঠিক হবে
+        window.addEventListener('resize', () => {
+            setupHighDefinitionCanvas();
+            buildVibrantWheelGraphics();
+        });
+
         function buildVibrantWheelGraphics() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            const radius = canvas.width / 2 - 6;
+            // বর্তমান সিএসএস সাইজ অনুযায়ী ড্রইং এরিয়া হিসাব
+            const rect = canvas.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
+            
+            ctx.clearRect(0, 0, width, height);
+            
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = (width / 2) - 6;
 
             for (let i = 0; i < numSections; i++) {
                 const angle = i * arc;
@@ -330,31 +344,54 @@
                 ctx.fill();
 
                 ctx.strokeStyle = "rgba(255, 255, 255, 0.14)";
-                ctx.lineWidth = 3;
+                ctx.lineWidth = 2;
                 ctx.stroke();
 
                 ctx.save();
                 ctx.translate(centerX, centerY);
                 ctx.rotate(angle + arc / 2);
                 
+                // রেজোলিউশন অনুযায়ী ফন্ট সাইজ রেসপন্সিভ করা হয়েছে
                 ctx.fillStyle = "#ffffff";
-                ctx.font = "900 18px 'Plus Jakarta Sans'";
+                ctx.font = "900 12px 'Plus Jakarta Sans'"; 
                 ctx.textAlign = "right";
                 ctx.textBaseline = "middle";
                 ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
-                ctx.shadowBlur = 8;
-                ctx.fillText(prizes[i].amount, radius - 45, 0);
+                ctx.shadowBlur = 4;
+                
+                // লেখা পজিশন অ্যাডজাস্টমেন্ট
+                ctx.fillText(prizes[i].amount, radius - 25, 0);
 
                 if (loadedIconImages[i]) {
-                    const iconSize = 24; 
-                    const iconX = radius - 155; 
-                    const iconY = -12; 
+                    const iconSize = 16; 
+                    const iconX = radius - 95; 
+                    const iconY = -8; 
+                    
+                    // স্মুথ ইমেজ রেন্ডারিং অপশন
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    
                     ctx.drawImage(loadedIconImages[i], iconX, iconY, iconSize, iconSize);
                 }
 
                 ctx.restore();
             }
         }
+
+        // ইমেজ লোড শেষ হলে ইনিশিয়াল সেটআপ কল হবে
+        prizes.forEach((prize, idx) => {
+            const img = new Image();
+            img.src = prize.iconUrl;
+            img.onload = () => {
+                totalLoadedImagesCounter++;
+                if (totalLoadedImagesCounter === numSections) {
+                    setupHighDefinitionCanvas(); // প্রথমে এইচডি সেটআপ
+                    buildVibrantWheelGraphics(); 
+                }
+            };
+            loadedIconImages[idx] = img;
+        });
+
 
         // --- 3. WEB3 WALLET CONNECTION ---
         let networkUserActiveNode = null;
