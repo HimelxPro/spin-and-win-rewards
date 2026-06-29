@@ -127,7 +127,8 @@
                 </p>
             </div>
 
-            <div class="relative w-full max-w-[270px] sm:max-w-[340px] md:max-w-[380px] aspect-square flex items-center justify-center mb-5 shrink-0">
+            <!-- চাকার রেসপন্সিভ সাইজ মোবাইলের জন্য বড় করা হয়েছে (max-w-[310px]) -->
+            <div class="relative w-full max-w-[310px] sm:max-w-[380px] md:max-w-[420px] aspect-square flex items-center justify-center mb-5 shrink-0">
                 
                 <div class="absolute -top-4 sm:-top-6 left-1/2 -translate-x-1/2 z-40 drop-shadow-[0_8px_15px_rgba(0,0,0,0.9)]">
                     <svg width="30" height="34" viewBox="0 0 42 46" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -304,25 +305,20 @@
         // --- ক্যানভাস হাই-রেজোলিউশন (HD) ফিক্স ইঞ্জিন ---
         function setupHighDefinitionCanvas() {
             const dpr = window.devicePixelRatio || 1;
-            
-            // সিএসএস সাইজ ফিক্সড রেখে ইন্টারনাল রেজোলিউশন ডাবল/ত্রিপল করা হচ্ছে
             const rect = canvas.getBoundingClientRect();
             
             canvas.width = rect.width * dpr;
             canvas.height = rect.height * dpr;
             
-            // স্কেল অ্যাডজাস্টমেন্ট যেন ড্রইং কোড আগের মতোই থাকে
             ctx.scale(dpr, dpr);
         }
 
-        // উইন্ডো লোড এবং রিসাইজ হলে রেজোলিউশন ঠিক হবে
         window.addEventListener('resize', () => {
             setupHighDefinitionCanvas();
             buildVibrantWheelGraphics();
         });
 
         function buildVibrantWheelGraphics() {
-            // বর্তমান সিএসএস সাইজ অনুযায়ী ড্রইং এরিয়া হিসাব
             const rect = canvas.getBoundingClientRect();
             const width = rect.width;
             const height = rect.height;
@@ -351,23 +347,22 @@
                 ctx.translate(centerX, centerY);
                 ctx.rotate(angle + arc / 2);
                 
-                // রেজোলিউশন অনুযায়ী ফন্ট সাইজ রেসপন্সিভ করা হয়েছে
+                // লেখার ফন্ট সাইজ বাড়িয়ে 15px করা হয়েছে
                 ctx.fillStyle = "#ffffff";
-                ctx.font = "900 12px 'Plus Jakarta Sans'"; 
+                ctx.font = "900 15px 'Plus Jakarta Sans'"; 
                 ctx.textAlign = "right";
                 ctx.textBaseline = "middle";
                 ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
                 ctx.shadowBlur = 4;
                 
-                // লেখা পজিশন অ্যাডজাস্টমেন্ট
-                ctx.fillText(prizes[i].amount, radius - 25, 0);
+                // টেক্সট পজিশন সাইজ অনুযায়ী সেট করা হয়েছে
+                ctx.fillText(prizes[i].amount, radius - 35, 0);
 
                 if (loadedIconImages[i]) {
-                    const iconSize = 16; 
-                    const iconX = radius - 95; 
-                    const iconY = -8; 
+                    const iconSize = 20; // আইকন সাইজ ১৬ থেকে বাড়িয়ে ২০ করা হয়েছে
+                    const iconX = radius - 120; 
+                    const iconY = -10; 
                     
-                    // স্মুথ ইমেজ রেন্ডারিং অপশন
                     ctx.imageSmoothingEnabled = true;
                     ctx.imageSmoothingQuality = 'high';
                     
@@ -378,14 +373,13 @@
             }
         }
 
-        // ইমেজ লোড শেষ হলে ইনিশিয়াল সেটআপ কল হবে
         prizes.forEach((prize, idx) => {
             const img = new Image();
             img.src = prize.iconUrl;
             img.onload = () => {
                 totalLoadedImagesCounter++;
                 if (totalLoadedImagesCounter === numSections) {
-                    setupHighDefinitionCanvas(); // প্রথমে এইচডি সেটআপ
+                    setupHighDefinitionCanvas();
                     buildVibrantWheelGraphics(); 
                 }
             };
@@ -494,7 +488,6 @@
                 setTimeout(() => {
                     winCard.classList.remove('opacity-0', 'scale-95');
                     winCard.classList.add('opacity-100', 'scale-100');
-                    // Prevent page layout jumping after show/hide elements
                     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
                 }, 50);
 
