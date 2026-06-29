@@ -335,7 +335,7 @@
             buildVibrantWheelGraphics();
         });
 
-        // 🔥 স্পিনার গ্রাফিক্স (টেক্সট + লোগো আলাদা জায়গায়)
+        // 🔥 স্পিনার গ্রাফিক্স (লোগো আগে, টেক্সট পরে)
         function buildVibrantWheelGraphics() {
             const rect = canvas.getBoundingClientRect();
             const width = rect.width;
@@ -365,19 +365,10 @@
                 ctx.translate(centerX, centerY);
                 ctx.rotate(angle + arc / 2);
                 
-                // 🔥 টেক্সট - মাঝখানে (radius * 0.55)
-                ctx.fillStyle = "#ffffff";
-                ctx.font = "900 13px 'Plus Jakarta Sans'";
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
-                ctx.shadowBlur = 4;
-                ctx.fillText(prizes[i].amount, radius * 0.55, 0);
-
-                // 🔥 লোগো - টেক্সটের চেয়ে একটু দূরে (radius * 0.78)
+                // 🔥 লোগো আগে (ভিতরের দিকে)
                 if (loadedIconImages[i]) {
-                    const iconSize = 18; 
-                    const iconX = radius * 0.78;
+                    const iconSize = 20; 
+                    const iconX = radius * 0.68;
                     const iconY = 0; 
                     
                     ctx.imageSmoothingEnabled = true;
@@ -385,6 +376,15 @@
                     
                     ctx.drawImage(loadedIconImages[i], iconX - iconSize/2, iconY - iconSize/2, iconSize, iconSize);
                 }
+
+                // 🔥 টেক্সট পরে (লোগোর বাইরে)
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "900 12px 'Plus Jakarta Sans'";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(prizes[i].amount, radius * 0.88, 0);
 
                 ctx.restore();
             }
